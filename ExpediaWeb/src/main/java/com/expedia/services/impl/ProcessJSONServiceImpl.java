@@ -8,13 +8,17 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.stereotype.Service;
 
+import com.expedia.facade.impl.ProcessJSONFacadeImpl;
 import com.expedia.services.ProcessJSONService;
 
 @Service("processJSONService")
 public class ProcessJSONServiceImpl implements ProcessJSONService {
 
 	
+	/** The log. */
+	org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger(ProcessJSONFacadeImpl.class);
 	
+	/** The weather map. */
 	Map<String,String> weatherMap = new WeakHashMap<String, String>();
 	
 	/* (non-Javadoc)
@@ -58,8 +62,8 @@ public class ProcessJSONServiceImpl implements ProcessJSONService {
 			
 			if(itemSet.contains(nodeValue1)) {
 				
-				System.out.println("Condition Matched for nodeValue1");
-				System.out.println(nodeValue1);
+				LOG.info("Condition Matched for nodeValue1"+nodeValue1);
+				
 				
 				System.out.println(newNodeJson.getString(nodeValue1));
 				weatherMap.put(nodeValue1, newNodeJson.getString(nodeValue1));
@@ -72,7 +76,7 @@ public class ProcessJSONServiceImpl implements ProcessJSONService {
 					//JSONObject nodeJson = newNodeJson.getJSONObject(nodeValue1);
 					processJSON(nodeValue1,newNodeJson, itemSet);
 				}
-				 System.out.println("Node_"+i+"="+nodeValue1+";value_"+i+"="+newNodeJson.get(nodeValue1));
+				LOG.info("Node_"+i+"="+nodeValue1+";value_"+i+"="+newNodeJson.get(nodeValue1));
 			}
 		}
 		

@@ -1,5 +1,6 @@
 package com.expedia.controller;
 import java.util.Map;
+import java.util.logging.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -20,6 +21,8 @@ public class WeatherReport {
   
 	/** The Constant WEATHER_URL. */
 	private static final String WEATHER_URL = "weather.url";
+	
+	org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger(WeatherReport.class);
 
 	@Autowired
 	ProcessJSONFacade processJsonFacade;
@@ -51,7 +54,7 @@ public class WeatherReport {
 	public Map<String,String> getWeatherInfo(@PathVariable String zipCode,HttpServletRequest request) {
 		Map<String, String> weatherReportMap = getWeatherMap(zipCode, request);
 
-		System.out.print("====="+weatherReportMap);
+		LOG.info("====="+weatherReportMap);
 		if(weatherReportMap.isEmpty()) {
 			weatherReportMap.put("Error", "Zip code not found");
 		}

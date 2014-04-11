@@ -3,7 +3,6 @@ package com.expedia.connector.impl;
 import java.net.URL;
 import java.util.Scanner;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.expedia.connector.ProcessJSONConnector;
@@ -14,6 +13,9 @@ public class ProcessJSONConnectorImpl implements ProcessJSONConnector {
 
 	/** The Constant JSON. */
 	private static final String JSON = ".json";
+	
+	/** The log. */
+	org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger(ProcessJSONConnectorImpl.class);
 	
 	/** The Constant SEPARATOR. */
 	private static final String SEPARATOR = "/";
@@ -28,11 +30,11 @@ public class ProcessJSONConnectorImpl implements ProcessJSONConnector {
 
 		StringBuilder jsonString = new StringBuilder();
 		try {
-			System.out.println("connector:" + zipCode);
+			LOG.info("connector:" + zipCode);
 			StringBuilder urlString = new StringBuilder(apiUrl);
 			urlString = urlString.append(SEPARATOR).append(zipCode)
 					.append(JSON);
-			System.out.println("urlstr" + urlString);
+			LOG.info("urlstr" + urlString);
 			URL url = new URL(urlString.toString());
 			scan = new Scanner(url.openStream());
 			jsonString = new StringBuilder();

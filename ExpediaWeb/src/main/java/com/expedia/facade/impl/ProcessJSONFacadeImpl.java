@@ -5,17 +5,19 @@ import java.util.Map;
 import java.util.Set;
 import java.util.WeakHashMap;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.expedia.connector.ProcessJSONConnector;
+import com.expedia.connector.impl.ProcessJSONConnectorImpl;
 import com.expedia.exceptions.CustomSystemException;
 import com.expedia.facade.ProcessJSONFacade;
 import com.expedia.services.ProcessJSONService;
 
-// TODO: Auto-generated Javadoc
+
 /**
  * The Class ProcessJSONFacadeImpl.
  */
@@ -23,6 +25,8 @@ import com.expedia.services.ProcessJSONService;
 public class ProcessJSONFacadeImpl implements ProcessJSONFacade {
 
 	
+	/** The log. */
+	org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger(ProcessJSONFacadeImpl.class);
 	/** The process json connector. */
 	@Autowired
 	ProcessJSONConnector processJSONConnector;
@@ -67,7 +71,7 @@ public class ProcessJSONFacadeImpl implements ProcessJSONFacade {
 			
 			jsonString = processJSONConnector.getWeatherResponse(zipCode,url);
 		} catch (CustomSystemException e) {
-			e.printStackTrace();
+			LOG.error("Error in getJsonString",e);
 		}
 
 		return jsonString;
@@ -83,14 +87,12 @@ public class ProcessJSONFacadeImpl implements ProcessJSONFacade {
 		String jsonString = getJsonString(zipCode,url);
 
 		Set<String> configuredItemValues = getDataToBeDisplayed(key);
-		//ProcessJSONServiceImpl processJSONServiceImpl = new ProcessJSONServiceImpl();
-		if (configuredItemValues.size() > 0) {
+		if (org.springframework.util.CollectionUtils.isEmpty(configuredItemValues)) {
 			try {
 				itemValueMap = processJSONService.getWeatherDetails(
 						configuredItemValues, jsonString);
 			} catch (JSONException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				LOG.error("Error in getValueItemMap",e);
 			}
 		}
 
