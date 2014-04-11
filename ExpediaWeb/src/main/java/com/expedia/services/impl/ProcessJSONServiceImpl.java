@@ -28,7 +28,6 @@ public class ProcessJSONServiceImpl implements ProcessJSONService {
 	public Map<String, String> getWeatherDetails(final Set<String> displayItems,final String jsonString) throws JSONException {
 		
 		JSONObject object = new JSONObject(jsonString);
-
 		String [] jsonObjectNameArray = JSONObject.getNames(object);
 		for(String jsonName : jsonObjectNameArray) {
 			processJSON(jsonName, object, displayItems);
@@ -65,7 +64,7 @@ public class ProcessJSONServiceImpl implements ProcessJSONService {
 				LOG.info("Condition Matched for nodeValue1"+nodeValue1);
 				
 				
-				System.out.println(newNodeJson.getString(nodeValue1));
+				LOG.info(newNodeJson.getString(nodeValue1));
 				weatherMap.put(nodeValue1, newNodeJson.getString(nodeValue1));
 				
 			}

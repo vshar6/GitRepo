@@ -93,7 +93,7 @@ public class ProcessJSONFacadeImpl implements ProcessJSONFacade {
 						configuredItemValues, jsonString);
 			} catch (JSONException e) {
 				LOG.error("Error in getValueItemMap",e);
-			}
+			} 
 		}
 
 		return itemValueMap;

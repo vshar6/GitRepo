@@ -1,5 +1,7 @@
 package com.expedia.connector.impl;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Scanner;
 
@@ -42,9 +44,12 @@ public class ProcessJSONConnectorImpl implements ProcessJSONConnector {
 				jsonString.append(scan.nextLine());
 			}
 
-		} catch (Exception e) {
+		} catch (MalformedURLException e) {
 			throw new CustomSystemException("Exception in getting response", e);
-		} finally {
+		} catch (IOException e) {
+			throw new CustomSystemException("Exception in getting response", e);
+		} 
+		finally {
 			if (scan != null)
 				scan.close();
 		}
